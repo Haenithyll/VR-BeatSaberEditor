@@ -1,0 +1,45 @@
+{
+    "name": "Pause",
+    "maps": [
+        {
+            "name": "PauseMap",
+            "id": "2f850ff9-30d3-4104-97fd-8afa884c7002",
+            "actions": [
+                {
+                    "name": "LaunchPause",
+                    "type": "Value",
+                    "id": "56e20828-7369-4da9-ba15-70a4c01eab83",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "adfe6047-fb18-49ae-92c2-dae1ed6c4cff",
+                    "path": "<XRController>{RightHand}/menu",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LaunchPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "847b3f50-5e51-4d91-be12-f90feedfcbb2",
+                    "path": "<Keyboard>/#(W)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LaunchPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

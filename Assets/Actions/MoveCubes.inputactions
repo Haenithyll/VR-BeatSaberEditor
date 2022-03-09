@@ -1,0 +1,122 @@
+{
+    "name": "MoveCubes",
+    "maps": [
+        {
+            "name": "MovesCube",
+            "id": "8441c7c7-a18d-4e78-b775-6b5c04df0b3f",
+            "actions": [
+                {
+                    "name": "ForwardBackward",
+                    "type": "Value",
+                    "id": "4a18cbd1-6815-4fe3-a24c-344d7cdb092a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "StopMoving",
+                    "type": "Value",
+                    "id": "ac1a9aea-e32a-491a-91e5-a22d04704ad0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6fde1b14-2184-40c0-8def-5fb344b7cde7",
+                    "path": "<XRController>{LeftHand}/touchpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ForwardBackward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14550e61-f517-447b-9813-5c5115ed9423",
+                    "path": "<XRController>{LeftHand}/touchpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StopMoving",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "SpawnCube",
+            "id": "3c09380c-0522-46ca-8863-0f07c8ffd959",
+            "actions": [
+                {
+                    "name": "spawncube",
+                    "type": "Value",
+                    "id": "558e5d09-e1c0-4aeb-8665-bc647d87c5b9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "rotate",
+                    "type": "Value",
+                    "id": "85955704-d8e6-445d-8ad2-41b7d53c97f4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "change",
+                    "type": "Value",
+                    "id": "89201ea2-6aa1-4f65-94d4-5322aaf13911",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "36e83c54-6536-417e-8f41-dcb63ccb0596",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "spawncube",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1032d5b-896a-4eb6-b616-ce3d5a9b6faa",
+                    "path": "<XRController>{RightHand}/touchpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23eb84b0-d40e-4047-85b6-3ea08441e1bb",
+                    "path": "<XRController>{RightHand}/gripPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "change",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
