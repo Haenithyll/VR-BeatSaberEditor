@@ -7,20 +7,17 @@ public class SaveData : MonoBehaviour
 {
     public GameObject CubesParent;
 
-    private List<CubeData> _CubesToSave = new List<CubeData>();
-    private List<CubeData> _CubesToLoad = new List<CubeData>();
+    private Save _newSave = new Save();
+    private Save _loadSave = new Save();
 
     [SerializeField] private GameObject _RedCubePrefab;
     [SerializeField] private GameObject _BlueCubePrefab;
 
-    private string _fileStart = "Cube";
-    private string _fileEnd = ".txt";
-
-    private bool _EndOfCubes = false;
+    private string _fileName = "cubeSave.txt";
 
     private void Awake()
     {
-        if(Main.CurrentLevelType == Main.LevelType.Playing)
+        if (Main.CurrentLevelType == Main.LevelType.Playing)
             LoadJson();
     }
 
@@ -33,7 +30,7 @@ public class SaveData : MonoBehaviour
         Vector3 position;
         Vector3 rotation;
 
-        for(int index = 0; index < CubesParent.transform.childCount; index++)
+        for (int index = 0; index < CubesParent.transform.childCount; index++)
         {
             cube = CubesParent.transform.GetChild(index).gameObject;
 
@@ -43,52 +40,23 @@ public class SaveData : MonoBehaviour
             Color = cube.GetComponent<Cube>().color == Saber.Color.Red;
             cubeData = new CubeData(position.x, position.y, position.z, rotation.z, Color);
 
-            _CubesToSave.Add(cubeData);
+            _newSave.Cubes.Add(cubeData);
         }
     }
 
     public void SaveIntoJson()
     {
-        DeleteOldSave();
-
         RetrieveCubeData();
         string json = string.Empty;
-        int index = 0;
 
-        foreach (CubeData data in _CubesToSave)
-        {
-            json = JsonUtility.ToJson(data);
-            WriteToFile(index, json);
-            index++;
-        }
-    }
-
-    private void DeleteOldSave()
-    {
-        var existingFiles = Directory.GetFiles(Application.dataPath + "/SaveFolder");
-
-        for (int i = 0; i < existingFiles.Length; i++)
-        {
-            File.Delete(existingFiles[i]);
-        }
+        json = JsonUtility.ToJson(_newSave);
+        WriteToFile(json);
     }
 
     public void LoadJson()
     {
-        int index = 0;
-
-        while (!_EndOfCubes)
-        {
-            CubeData _newCubeData = new CubeData(0, 0, 0, 0, false);
-            string json = ReadFromFile(index);
-
-            if (json != "")
-            {
-                JsonUtility.FromJsonOverwrite(json, _newCubeData);
-                _CubesToLoad.Add(_newCubeData);
-                index++;
-            }
-        }
+        string json = ReadFromFile();
+        JsonUtility.FromJsonOverwrite(json, _loadSave);
 
         SpawnCubesFromLoad();
     }
@@ -96,22 +64,22 @@ public class SaveData : MonoBehaviour
     private void SpawnCubesFromLoad()
     {
 
-        foreach(CubeData cubeData in _CubesToLoad)
+        foreach (CubeData cubeData in _loadSave.Cubes)
         {
             GameObject cubeToSpawn;
             GameObject newCube;
 
             cubeToSpawn = cubeData.color ? _RedCubePrefab : _BlueCubePrefab;
-            newCube = Instantiate(cubeToSpawn, new Vector3(0,0,0), Quaternion.Euler(0, 0, cubeData.rotation));
+            newCube = Instantiate(cubeToSpawn, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, cubeData.rotation));
             newCube.transform.SetParent(CubesParent.transform);
             newCube.transform.localPosition = new Vector3(cubeData.x, cubeData.y, cubeData.z);
-            
+
         }
     }
 
-    private void WriteToFile(int index, string json)
+    private void WriteToFile(string json)
     {
-        string path = GetFilePath(index);
+        string path = GetFilePath();
         FileStream fileStream = new FileStream(path, FileMode.Create);
 
         using (StreamWriter writer = new StreamWriter(fileStream))
@@ -120,12 +88,12 @@ public class SaveData : MonoBehaviour
         }
     }
 
-    private string ReadFromFile(int index)
+    private string ReadFromFile()
     {
-        string path = GetFilePath(index);
+        string path = GetFilePath();
         if (File.Exists(path))
         {
-            using(StreamReader streamReader = new StreamReader(path))
+            using (StreamReader streamReader = new StreamReader(path))
             {
                 string json = streamReader.ReadToEnd();
                 return json;
@@ -133,14 +101,13 @@ public class SaveData : MonoBehaviour
         }
         else
         {
-            _EndOfCubes = true;
-            return "";
+            throw new System.Exception("File not found");
         }
     }
 
-    private string GetFilePath(int index)
+    private string GetFilePath()
     {
-        return Application.dataPath + "/SaveFolder/" + _fileStart + index.ToString() + _fileEnd;
-    } 
+        return Application.persistentDataPath + _fileName;
+    }
 }
 
